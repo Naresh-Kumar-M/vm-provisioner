@@ -31,7 +31,6 @@ public class AccountController {
 
     @PostMapping
     public Account createAccount(@Validated @RequestBody Account account) {
-        account.setPassword(account.getPassword());
         return accountRepository.save(account);
     }
 
