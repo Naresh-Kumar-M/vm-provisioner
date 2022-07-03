@@ -1,0 +1,93 @@
+databaseChangeLog:
+-  changeSet:
+      id: v1-01
+      author: vm-provisioner
+      preConditions:
+      -  onFail: MARK_RAN
+         not:
+            tableExists:
+               tableName: account
+      changes:
+      -  createTable:
+            tableName: account
+            columns:
+            -  column:
+                  constraints:
+                     nullable: false
+                     primaryKey: true
+                     primaryKeyName: account_pkey
+                  name: id
+                  type: uuid
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: name
+                  type: VARCHAR(250)
+            -  column:
+                  constraints:
+                     nullable: false
+                     unique: true
+                  name: email_id
+                  type: VARCHAR(100)
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: password
+                  type: VARCHAR(100)
+            -  column:
+                  constraints:
+                     nullable: false
+                     unique: true
+                  name: mobile_number
+                  type: VARCHAR(25)
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: role
+                  type: VARCHAR(25)
+-  changeSet:
+      id: v1-02
+      author: vm-provisioner
+      preConditions:
+      -  onFail: MARK_RAN
+         not:
+            tableExists:
+               tableName: virtual_machine
+      changes:
+      -  createTable:
+            tableName: virtual_machine
+            columns:
+            -  column:
+                  constraints:
+                     nullable: false
+                     primaryKey: true
+                     primaryKeyName: vm_pkey
+                  name: id
+                  type: uuid
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: operating_system
+                  type: VARCHAR(250)
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: ram_size
+                  type: BIGINT
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: hard_disk_size
+                  type: BIGINT
+            -  column:
+                  constraints:
+                     nullable: false
+                  name: cpu_cores
+                  type: INT
+            - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                     nullable: false
+                     foreignKeyName: fk_account_id
+                     references: account(id)
